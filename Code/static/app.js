@@ -136,11 +136,19 @@ d3.select("#selDataset").on("change", function() {
         };
 
         //Parse Metadata for Table
-        var tbody = d3.select("tbody")
-        var row = tbody.append("tr");
+        var tbody = d3.select('tbody');
+        
+        var tableRows = d3.selectAll("tr");
+        var tableCells = d3.selectAll("td");
+
+        tableRows.remove();
+        tableCells.remove();
 
         Object.entries(FoundDemo).forEach(function([key, value]) {
-            console.log(key, value);
+            console.log(`${key}: ${value}`);
+            var row = tbody.append("tr");
+            var cell = row.append("td");
+            cell.text(`${key}: ${value}`);
         });
     });
 });
