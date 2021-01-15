@@ -83,13 +83,15 @@ d3.select("#selDataset").on("change", function() {
         var BarData = [trace1];
 
         var layout = {
-            title: "Did it work?",
-            /* margin: {
+            title: "OTU Specimen Chart",
+            xaxis: {title: "Specimen Count"},
+            yaxis: {title: "OTU ID Number"},
+            margin: {
                 l: 100,
                 r: 100,
                 t: 100,
                 b: 100
-              } */
+              }
         };
 
         Plotly.newPlot("bar", BarData, layout);
