@@ -4,6 +4,15 @@ d3.json("samples.json").then((importedData) => {
 });
 
 //Create Dropdown Options
+/* function DropDownInit() {
+    d3.select('select').selectAll('option')
+        .enter()
+        .append('option')
+        .text("Select A Patient")
+};
+
+DropDownInit(); */
+
 d3.json("samples.json").then((importedData) => {
     var DropdownData = importedData.names
     d3.select("select").selectAll('option')
@@ -14,7 +23,6 @@ d3.json("samples.json").then((importedData) => {
             return d;
         });
 });
-
 
 //Select Correct Data Based on Dropdown
 d3.select("#selDataset").on("change", function() {
@@ -83,15 +91,15 @@ d3.select("#selDataset").on("change", function() {
         var BarData = [trace1];
 
         var layout1 = {
-            title: "OTU Specimen Chart",
-            xaxis: {title: "Specimen Count"},
-            yaxis: {title: "OTU ID Number"},
-            margin: {
+            title: `Patient #${specimen_id} OTU Specimen Chart`,
+            xaxis: {title: "Bacteria Count"},
+            //yaxis: {title: "OTU ID Number"},
+            /* margin: {
                 l: 100,
                 r: 100,
                 t: 100,
                 b: 100
-              }
+              } */
         };
 
         var trace2 = {
@@ -137,7 +145,7 @@ d3.select("#selDataset").on("change", function() {
 
         //Parse Metadata for Table
         var tbody = d3.select('tbody');
-        
+
         var tableRows = d3.selectAll("tr");
         var tableCells = d3.selectAll("td");
 
