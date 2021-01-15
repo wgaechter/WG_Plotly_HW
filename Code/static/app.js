@@ -23,7 +23,7 @@ d3.select("#selDataset").on("change", function() {
 
     d3.json("samples.json").then((importedData) => {
         var SpecimenData = importedData.samples
-        console.log(SpecimenData)
+        //console.log(SpecimenData)
         //Shows All Arrays with the data still inside
         //console.log(SpecimenData[0])
         //shows specificly this dataset, with tangible ID, otu_ids array, etc. 
@@ -37,7 +37,7 @@ d3.select("#selDataset").on("change", function() {
                 break
             };
         };
-        console.log(FoundSpecimen);
+        // console.log(FoundSpecimen);
 
         FoundSpecimen.sample_values.sort(function(a, b) {
             return parseInt(b.sample_values) - parseInt(a.sample_values);
@@ -57,20 +57,20 @@ d3.select("#selDataset").on("change", function() {
         top10Labels.reverse()
         top10values.reverse()
 
-        console.log("----------------------------------------------------------");
+        /* console.log("----------------------------------------------------------");
         console.log(specimen_id);
         console.log(top10IDs);
         console.log(top10Labels);
         console.log(top10values);
         console.log("----------------------------------------------------------");
-
+ */
         // Gotta map something somewhere???
         top10IDlist = top10IDs.map(id => id.toString());
 
         var OTUlist = top10IDlist.map(function(id) {
             return `OTU #${id}`;
         });
-        console.log(OTUlist);
+        //console.log(OTUlist);
         // Chart Creation
         var trace1 = {
             x: top10values,
@@ -82,7 +82,7 @@ d3.select("#selDataset").on("change", function() {
 
         var BarData = [trace1];
 
-        var layout = {
+        var layout1 = {
             title: "OTU Specimen Chart",
             xaxis: {title: "Specimen Count"},
             yaxis: {title: "OTU ID Number"},
@@ -94,6 +94,53 @@ d3.select("#selDataset").on("change", function() {
               }
         };
 
-        Plotly.newPlot("bar", BarData, layout);
+        var trace2 = {
+            x: otu_ids,
+            y: values,
+            mode: 'markers',
+            marker: {
+                //color: ['rgb(93, 164, 214)', 'rgb(255, 144, 14)',  'rgb(44, 160, 101)', 'rgb(255, 65, 54)'],
+                size: values
+            }
+        };
+
+        var BubbleData = [trace2];
+
+        var layout2 = {
+            title: "Bubble Chart",
+            /* margin: {
+                l: 100,
+                r: 100,
+                t: 100,
+                b: 100
+              } */
+        }
+
+        Plotly.newPlot("bar", BarData, layout1);
+        Plotly.newPlot("bubble", BubbleData, layout2);
+    });
+    // Demographic Info Section
+    console.log("Demographic Selection:", dropdownSelection)
+
+    d3.json("samples.json").then((importedData) => {
+        var DemoData = importedData.metadata
+        console.log(DemoData)
+
+        //Loop to find Sepcific MetaData
+        for (var i = 0; i < DemoData.length; i++) {
+            if (DemoData[i].id == dropdownSelection) {
+                var FoundDemo = DemoData[i];
+                console.log(FoundDemo);
+                break
+            };
+        };
+
+        //Parse Metadata for Table
+        var tbody = d3.select("tbody")
+        var row = tbody.append("tr");
+
+        Object.entries(FoundDemo).forEach(function([key, value]) {
+            console.log(key, value);
+        });
     });
 });
