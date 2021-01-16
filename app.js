@@ -3,16 +3,6 @@ d3.json("samples.json").then((importedData) => {
     console.log(ConsoleData);
 });
 
-//Create Dropdown Options
-/* function DropDownInit() {
-    d3.select('select').selectAll('option')
-        .enter()
-        .append('option')
-        .text("Select A Patient")
-};
-
-DropDownInit(); */
-
 d3.json("samples.json").then((importedData) => {
     var DropdownData = importedData.names
     d3.select("select").selectAll('option')
@@ -115,7 +105,9 @@ d3.select("#selDataset").on("change", function() {
         var BubbleData = [trace2];
 
         var layout2 = {
-            title: "Bubble Chart",
+            title: "All Present Bacteria Sampled",
+            xaxis: {title: "Bacteria ID Number"},
+            yaxis: {title: "Sample Ammount"},
             /* margin: {
                 l: 100,
                 r: 100,
